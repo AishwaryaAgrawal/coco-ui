@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="static/js/coco_grid_selector.js"></script>
+        <link rel="stylesheet" type="text/css" href="static/css/coco_grid_selector.css">
+        <script type="text/javascript">
+            var data = [];
+            var init_time;
+            // TODO: define list of image urls to load in this page
+            var im_urls = [];
+
+            // ================================================================
+            // Dynamically generate comments when page is ready
+            // ================================================================
+            $(window).load(function(){
+                data = initialize_grid(im_urls);
+                init_time = $.now();            
+            });
+
+            // ================================================================
+            // Function to submit form to Server
+            // The form is submitted to MTurk after server successfully process the submission
+            // The HIT is completed after MTurk server receives the submission
+            // ================================================================
+            function submit_form(){
+                // disable button to avoid multiple submission
+                $('#button').attr('disabled', true);
+
+                // process answers
+                // pack user's response in a dictionary structure and send to the server in JSON format
+                answers = [];
+                for(i=0; i<photos.length; i++){
+                    answers.push({
+                            'isselected':photos[i].isselected
+                    });
+                } 
+                var ans = JSON.stringify(answers);
+                var duration = ($.now()-init_time)/1000;
+                duration = duration.toString();
+                $("input[name='ans']").val(ans)
+                $("input[name='duration']").val(duration)
+
+                // set the resp to send back to the server here
+                // the values to send to MTurk has already defined inside #mturk_form
+                // if you don't need to bother to set value here
+                resp =
+                {
+                // TODO: set the data to be submitted back to server
+                };
+
+                // post ajax request to server
+                // if there's no backend to process the request, form can be directly submitted to MTurk
+                $.ajax({
+                  type: "POST",
+                  // "TODO: set the url of server to process the data",
+                  url: "",
+                  data: {'resp':JSON.stringify(resp)}
+                }).done(function(data) {
+                    $('#mturk_form').submit();
+                }); 
+            }
+        </script>
+    </head>
+    <body>
+        <!--
+        the form that defines what values are going to be sent to MTurk
+        the action of form and values for hitId, assignmentId, and workerId should be modified
+        -->
+        <form id='mturk_form' action="MTURK_FORM_TO_SUBMIT">
+            <input type="hidden" id="hitId" name="hitId" value='MTURK_HIT_ID'>
+            <input type="hidden" id="assignmentId" name="assignmentId" value='MTURK_ASSIGNMENT_ID'>
+            <input type="hidden" id="workerId" name="workerId" value='MTURK_WORKER_ID'>
+        </form> 
+        <div class='container'>
+            <div id='title' >
+                <!-- TODO: Write your instruction here -->
+                Task: select all dog images.
+            </div>
+            <br>
+            <div id='instruction'>
+                <!-- TODO: Write your instruction here -->
+                Instruction: click to select dog images.
+            </div>
+
+            <div>
+                <!-- image div for displaying grid -->
+                <div id='imdiv'></div>
+
+                <!-- button for submitting the HIT -->
+                <br>
+                <div id='bottom'>
+                    <input id='button' type='button' value='submit this HIT!' style='font-size:16pt' onclick='submit_form()'>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
