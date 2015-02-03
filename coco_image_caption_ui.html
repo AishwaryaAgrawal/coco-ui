@@ -213,12 +213,10 @@
     <body>
         <div id="dialog-modal" title="Message"></div>
         <div id="dialog-confirm" title="Save the Result?"></div>
-        <form id='mturk_form' action="{{form_action}}" method="POST">
-            <input type="hidden" id="hitId" name="hitId" value='{{hitId}}'>
-            <input type="hidden" id="assignmentId" name="assignmentId" value='{{assignmentId}}'>
-            <input type="hidden" id="workerId" name="workerId" value='{{workerId}}'>
-            <input type="hidden" id="ans" name="ans">
-            <input type="hidden" id="duration" name="duration">
+        <form id='mturk_form' action="MTURK_FORM_TO_SUBMIT" method="POST">
+            <input type="hidden" id="hitId" name="hitId" value='MTURK_HIT_ID'>
+            <input type="hidden" id="assignmentId" name="assignmentId" value='MTURK_ASSIGNMENT_ID'>
+            <input type="hidden" id="workerId" name="workerId" value='MTURK_WORKER_ID'>
         </form>
         <div style='text-align:center;display:inline-block'>
             <div style='width:800px;display:inline-block'>
