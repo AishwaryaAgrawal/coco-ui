@@ -3,63 +3,28 @@
     <head>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script src="static/js/coco_grid_selector.js"></script>
+        <script src="static/js/mturk_form_submitor.js"></script>
         <link rel="stylesheet" type="text/css" href="static/css/coco_grid_selector.css">
         <script type="text/javascript">
-            var data = [];
+            var questions = new Array();
             var init_time;
             // TODO: define list of image urls to load in this page
-            var im_urls = [];
+            var im_urls = ["http://i.dailymail.co.uk/i/pix/2014/08/05/1407225932091_wps_6_SANTA_MONICA_CA_AUGUST_04.jpg",
+                   "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcS2F5ECqPVTiOJVCDkv82qBVBZ0X0KuLQz64KPwmIEKDfq98QpBYA",
+                   "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQWhf9oPdEDxtdqbNzecOiCXxaofLFk6Div26ANDJj1PD3f3ze1Ig",
+                   "http://canineplanet.net/wp-content/uploads/2014/09/cute-dog-pictures.jpg",
+                   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_H1q2eHyKdOlGgGJkU2kaGaS4JODIsu8DZ0b81qjrCklEzvi4",
+                   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgqVqDC0WAIIOOHXM5tNoeg_DvLP1MF-jwo-FNs6jVdT7P4LT76A",
+                   "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRDd-4K68_1i3GjoEXOrUZEMEpIrjvXXjia5G_vuK4ww5Hv6CAjlA",
+                   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRU_Qrw2HVZ4FuE3c0ibCbhdaD-9G8pcZv0LYtuXwzVbZBz85Pf"];
 
             // ================================================================
             // Dynamically generate comments when page is ready
             // ================================================================
             $(window).load(function(){
-                data = initialize_grid(im_urls);
+                questions = initialize_grid(im_urls);
                 init_time = $.now();            
             });
-
-            // ================================================================
-            // Function to submit form to Server
-            // The form is submitted to MTurk after server successfully process the submission
-            // The HIT is completed after MTurk server receives the submission
-            // ================================================================
-            function submit_form(){
-                // disable button to avoid multiple submission
-                $('#button').attr('disabled', true);
-
-                // process answers
-                // pack user's response in a dictionary structure and send to the server in JSON format
-                answers = [];
-                for(i=0; i<photos.length; i++){
-                    answers.push({
-                            'isselected':photos[i].isselected
-                    });
-                } 
-                var ans = JSON.stringify(answers);
-                var duration = ($.now()-init_time)/1000;
-                duration = duration.toString();
-                $("input[name='ans']").val(ans)
-                $("input[name='duration']").val(duration)
-
-                // set the resp to send back to the server here
-                // the values to send to MTurk has already defined inside #mturk_form
-                // if you don't need to bother to set value here
-                resp =
-                {
-                // TODO: set the data to be submitted back to server
-                };
-
-                // post ajax request to server
-                // if there's no backend to process the request, form can be directly submitted to MTurk
-                $.ajax({
-                  type: "POST",
-                  // "TODO: set the url of server to process the data",
-                  url: "",
-                  data: {'resp':JSON.stringify(resp)}
-                }).done(function(data) {
-                    $('#mturk_form').submit();
-                }); 
-            }
         </script>
     </head>
     <body>

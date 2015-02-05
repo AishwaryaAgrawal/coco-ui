@@ -1,22 +1,11 @@
 // =============================================================================================
-// initialize image grid from data
+// initialize image grid from questions
 // input: list of image urls one hope to display
-// output: the variable "data" to store image data and user response as a dictionary
+// output: the variable "questions" to store image data and user response as a dictionary
 // =============================================================================================
 function initialize_grid(im_urls){
-    // if image urls to loaded is not define, here sets the default urls to show
-    if (im_urls.length === 0){
-        im_urls = ["http://i.dailymail.co.uk/i/pix/2014/08/05/1407225932091_wps_6_SANTA_MONICA_CA_AUGUST_04.jpg",
-                   "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcS2F5ECqPVTiOJVCDkv82qBVBZ0X0KuLQz64KPwmIEKDfq98QpBYA",
-                   "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQWhf9oPdEDxtdqbNzecOiCXxaofLFk6Div26ANDJj1PD3f3ze1Ig",
-                   "http://canineplanet.net/wp-content/uploads/2014/09/cute-dog-pictures.jpg",
-                   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_H1q2eHyKdOlGgGJkU2kaGaS4JODIsu8DZ0b81qjrCklEzvi4",
-                   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgqVqDC0WAIIOOHXM5tNoeg_DvLP1MF-jwo-FNs6jVdT7P4LT76A",
-                   "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRDd-4K68_1i3GjoEXOrUZEMEpIrjvXXjia5G_vuK4ww5Hv6CAjlA",
-                   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRU_Qrw2HVZ4FuE3c0ibCbhdaD-9G8pcZv0LYtuXwzVbZBz85Pf"]
-    }
-
     // dynamically create image grid according to im_urls
+    var data = new Array();
     for(i=0; i< im_urls.length; i++){
         data[i] = new Object();
         data[i]['div'] = $('<div class="div_grid_0"><img class="im_grid" src="'+im_urls[i]+'"></img></div>');
@@ -143,7 +132,7 @@ this.imagePreview = function(){
 
             $("body").append("<p id='preview'></p>");
             $("#preview").hide();
-            data[idx]['img'].appendTo($('#preview'))
+            questions[idx]['img'].appendTo($('#preview'))
             var modulus = idx % 4;
             callback_hover(e, modulus);
             $("#preview").fadeIn("fast");
