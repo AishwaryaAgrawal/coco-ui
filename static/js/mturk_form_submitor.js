@@ -16,8 +16,6 @@ function submit_form(){
     var ans = JSON.stringify(answers);
     var duration = ($.now()-init_time)/1000;
     duration = duration.toString();
-    $("input[name='ans']").val(ans)
-    $("input[name='duration']").val(duration)
 
     // set the resp to send back to the server here
     // the values to send to MTurk has already defined inside #mturk_form
